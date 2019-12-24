@@ -11,16 +11,26 @@ class Triangle
   
   def kind
     # binding.pry
-    if l_1 <= 0 || l_2 <= 0 || l_3 < 0
+
+    a = [l_1, l_2, l_3]
+    a = a.sort  
+
+    if l_1 <= 0 || l_2 <= 0 || l_3 < 0 || a[0] + a[1] <= a[2]
       begin 
         raise TriangleError
       # rescue TriangleError => error
       #   puts error.message_invalid_length
       end
-    elsif l_1 + l_2 < l_3 || l_2 + l_3 < l_1 || l_1 + l_3 < l_2
-      begin 
-        raise TriangleError  
-        end
+    
+     
+    
+    # elsif l_1 + l_2 < l_3 || l_2 + l_3 < l_1 || l_1 + l_3 < l_2
+    
+    # elsif 
+    #   begin 
+    #     raise TriangleError  
+        
+    #   end
     else
       if l_1 == l_2 && l_2 == l_3
         :equilateral
