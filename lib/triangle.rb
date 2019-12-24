@@ -7,13 +7,21 @@ class Triangle
     @l_1 = l_1
     @l_2 = l_2
     @l_3 = l_3
-    
-
   end
   
   def kind
     # binding.pry
-    if l_1 > 0 && l_2 > 0 && l_3 > 0
+    if l_1 <= 0 || l_2 <= 0 || l_3 < 0
+      begin 
+        raise TriangleError
+      # rescue TriangleError => error
+      #   puts error.message_invalid_length
+      end
+    elsif l_1 + l_2 < l_3 || l_2 + l_3 < l_1 || l_1 + l_3 < l_2
+      begin 
+        raise TriangleError  
+        end
+    else
       if l_1 == l_2 && l_2 == l_3
         :equilateral
       elsif l_1 == l_2 && l_2 != l_3 || l_2 == l_3 && l_2 != l_1 || l_1 == l_3 && l_1 != l_2
@@ -26,7 +34,14 @@ class Triangle
   end
 
   class TriangleError < StandardError
-    'TriangleError'
+    # 'TriangleError'
+    def message_invalid_length
+      "invalid length"
+    end
+
+    def message_triangle_inequality
+      "triangle inequality"
+    end
   end
 
 end
