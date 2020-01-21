@@ -1,37 +1,41 @@
 class Triangle
 
-  def initialize(s1, s2, s3)
+  def initialize(side_1, side_2, side_3)
+    @triangle_sides = []
+    @triangle_sides << side_1
+    @triangle_sides << side_2
+    @triangle_sides << side_3
+  end
 
-    if s1 >= (s2 + s3) || s2 >= (s1 + s3) || s3 >= (s1 + s2)
-      raise TriangleError
+  def valid?
+    sum_one_two = @triangle_sides[0] + @triangle_sides[1]
+    sum_one_three = @triangle_sides[0] + @triangle_sides[2]
+    sum_two_three = @triangle_sides[1] + @triangle_sides[2]
+
+    if (@triangle_sides.none? {|side| side <= 0}) &&
+      (sum_one_two > @triangle_sides[2] && sum_one_three > @triangle_sides[1] && sum_two_three > @triangle_sides[0])
+      return true
+    else
+      return false
     end
-
-    if s1 <= 0 || s2 <= 0 ||s3 <= 0
-      raise TriangleError
-    end
-
-    if s1 == nil || s2 == nil ||s3 == nil
-      raise TriangleError
-    end
-
-    @s1 = s1
-    @s2 = s2
-    @s3 = s3
   end
 
   def kind
-    if @s1 == @s2 && @s1 == @s3
-      return :equilateral
-    elsif @s1 == @s2 || @s2 == @s3 || @s3 == @s1
-      return :isosceles
+    if valid?
+      if @triangle_sides.uniq.length == 1
+        return :equilateral
+      elsif @triangle_sides.uniq.length == 2
+        return :isosceles
+      else
+        return :scalene
+      end
     else
-      return :scalene
+      raise TriangleError
     end
   end
-end
+  
+  class TriangleError < StandardError
 
-class TriangleError < StandardError
+  end
   
 end
-
-
